@@ -1,0 +1,14 @@
+.title{
+    background-color: #473f47;
+    line-height: 55px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.title_font{
+    font-size: 16px;
+    width: flex;
+    font-style: bold;
+    color: white;
+}

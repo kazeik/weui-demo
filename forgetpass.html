@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>忘记密码</title>
+    <link rel="stylesheet" href="css/weui.min.css">
+    <link rel="stylesheet" href="css/title.css">
+    <script src="./js/utils.js"></script>
+    <script src="./js/zepto.min.js"></script>
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+</head>
+
+<body ontouchstart>
+    <div class="title">
+        <label class="title_font">忘记密码</label>
+    </div>
+    <div class="weui-cells__title">请详细输入以下信息</div>
+    <div class="weui-cells weui-cells_form">
+
+        <div class="weui-cell weui-cell_vcode">
+            <div class="weui-cell__hd">
+                <label>手机号</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="tel" id="input_phone" placeholder="请输入手机号">
+            </div>
+            <div class="weui-cell__ft">
+                <button class="weui-vcode-btn" href="javascript" id="getSmsCode">获取验证码</button>
+            </div>
+        </div>
+        <div class="weui-cell weui-cell_vcode">
+            <div class="weui-cell__hd">
+                <label class="weui-label">验证码</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" id="smscode" placeholder="请输入验证码" />
+            </div>
+            <div class="weui-cell__ft">
+                <img class="weui-vcode-img" src="./images/vcode.jpg" />
+            </div>
+        </div>
+    </div>
+    <div class="weui-btn-area">
+        <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</a>
+    </div>
+
+    <!-- 提示框  -->
+    <div id="dialogs">
+        <!--BEGIN dialog1-->
+        <div class="js_dialog" id="iosDialog1" style="display: none;">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__hd">
+                    <strong class="weui-dialog__title" id="dialog_title">提示</strong>
+                </div>
+                <div class="weui-dialog__bd" id="dialog_body1">弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内</div>
+                <div class="weui-dialog__ft">
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" id="dialog_left_button1">取消</a>
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" id="dialog_right_button1">确定</a>
+                </div>
+            </div>
+        </div>
+        <!--END dialog1-->
+        <!--BEGIN dialog2-->
+        <div class="js_dialog" id="iosDialog2" style="display: none;">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__bd" id="dialog_body2">弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内</div>
+                <div class="weui-dialog__ft">
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" id="dialog_center_button2">确定</a>
+                </div>
+            </div>
+        </div>
+        <!--END dialog2-->
+        <!--BEGIN dialog3-->
+        <div class="js_dialog" id="androidDialog1" style="display: none;">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog weui-skin_android">
+                <div class="weui-dialog__hd" id="dialog_title3">
+                    <strong class="weui-dialog__title">提示</strong>
+                </div>
+                <div class="weui-dialog__bd" id="dialog_body3">
+                    弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内
+                </div>
+                <div class="weui-dialog__ft">
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" id="dialog_left_button3">取消</a>
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" id="dialog_right_button3">确定</a>
+                </div>
+            </div>
+        </div>
+        <!--END dialog3-->
+        <!--BEGIN dialog4-->
+        <div class="js_dialog" id="androidDialog2" style="display: none;">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog weui-skin_android">
+                <div class="weui-dialog__bd" id="dialog_body4">
+                    弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内
+                </div>
+                <div class="weui-dialog__ft">
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" id="dialog_left_button4">取消</a>
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" id="dialog_right_button4">确定</a>
+                </div>
+            </div>
+        </div>
+        <!--END dialog4-->
+    </div>
+    </div>
+    <script type="text/javascript" class="dialog js_show">
+        $(function () {
+            var $iosDialog1 = $('#iosDialog1'),
+                $iosDialog2 = $('#iosDialog2'),
+                $androidDialog1 = $('#androidDialog1'),
+                $androidDialog2 = $('#androidDialog2');
+
+            $('#dialogs').on('click', '.weui-dialog__btn', function () {
+                $(this).parents('.js_dialog').fadeOut(200);
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $('#getSmsCode').on('click', function () {
+            var phone = $('#input_phone').val()
+            if (phone == "") {
+                $('#dialog_body2').html("手机号不能为空")
+                $('#iosDialog2').fadeIn(200)
+                return
+            } else if (!checkMobile(phone)) {
+                $('#dialog_body2').html("手机号不正确")
+                $('#iosDialog2').fadeIn(200)
+                return
+            } else {
+                console.log(phone)
+                getSmsCode(phone, function (success) {
+
+                }, function (error) {
+
+                });
+            }
+        })
+        $('#showTooltips').on('click', function () {
+            var phone = $('#input_phone').val()
+            var code = $('#smscode').val()
+            if (phone == "") {
+                $('#dialog_body2').html("手机号不能为空")
+                return
+            } else if (!checkMobile(phone)) {
+                $('#dialog_body2').html("手机号不不正确")
+                return
+            }
+
+            if (code == "") {
+                $('#dialog_body2').html("验证码不能为空")
+                $('#iosDialog2').fadeIn(200)
+                return
+            } else if (code.length < 6) {
+                $('#dialog_body2').html("验证码不正确")
+                $('#iosDialog2').fadeIn(200)
+                return
+            }
+            console.log(phone + " / " + code)
+            $.ajax({
+                type: 'post',
+                url: 'http://12.0.0.1/code/forgetpass',
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'text',
+                data: {
+                    phone: 'phone'
+                },
+                success: function (res) {
+
+                },
+                error: function (error) {
+
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

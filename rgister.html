@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>注册用户</title>
+    <link rel="stylesheet" href="css/title.css">
+    <link rel="stylesheet" href="css/weui.min.css">
+</head>
+
+<body ontouchstart>
+    <div class="title">
+        <label class="title_font">注册</label>
+    </div>
+    <div class="weui-cells__title">请详细输入以下信息</div>
+    <div class="weui-cells weui-cells_form">
+
+        <div class="weui-cell weui-cell_vcode">
+            <div class="weui-cell__hd">
+                <label class="weui-label">手机号</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="tel" id="register_phone" placeholder="请输入手机号">
+            </div>
+            <div class="weui-cell__ft">
+                <button class="weui-vcode-btn" id="register_getCode">获取验证码</button>
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">密码</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" pattern="[0-9]*" id="register_pass" placeholder="请输入密码" />
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">重复密码</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" pattern="[0-9]*" id="register_new_pass" placeholder="请再次输入密码" />
+            </div>
+        </div>
+        <div class="weui-cell weui-cell_vcode">
+            <div class="weui-cell__hd">
+                <label class="weui-label">验证码</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" id="register_code" placeholder="请输入验证码" />
+            </div>
+            <div class="weui-cell__ft">
+                <img class="weui-vcode-img" src="./images/vcode.jpg" />
+            </div>
+        </div>
+    </div>
+    <label for="weuiAgree" class="weui-agree">
+        <input id="weuiAgree" type="checkbox" id="register_checkbox" class="weui-agree__checkbox">
+        <span class="weui-agree__text">
+            阅读并同意
+            <a href="javascript:void(0);">《相关条款》</a>
+        </span>
+    </label>
+    <div class="weui-btn-area">
+        <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</a>
+    </div>
+</body>
+
+</html>
